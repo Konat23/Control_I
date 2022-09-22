@@ -1,8 +1,10 @@
-load ../data/dryer_data.mat
+load ../data/dryer_data.mat %load dryer2 (te lo da mas facil)
 
 u = dryer.input;    y = dryer.output; % Separa la informacion de entrada y salida de la tambla 
 u = u - mean(u); % Le quita la componenente dc
-Ts = 0.08;     Fs = 1/Ts;
+u = u - min(u); %hace que el primero empiece en 0 hacia arriba
+y = y - y(1); %hace que el priemr dato empiece desde 0
+Ts = 0.08;     Fs = 1/Ts; %
 
 % ver espectro de u.
 U = fft(u);   U = fftshift(U);
@@ -15,15 +17,15 @@ pU = 10*log10(abs(U).^2/N);    % power of the DFT
 %pause
 
 % 1. drifts a detrending.
-u = input;   y = output;
+%u = input;   y = output;
 %figure(1)
 %plot(u)
 %figure(2)
 %plot(y)
-u = u - mean(u);    y = y - mean(y);
+%u = u - mean(u);    y = y - mean(y);
 
 
-data = iddata(y, u , Ts);
+%data = iddata(y, u , Ts);
 
 %. Impulse estimation.
 %ghat = cra(data);
@@ -37,8 +39,8 @@ data = iddata(y, u , Ts);
 %figure(2)
 %bode(G)
 
-sys_e = arx(data, [2 2 3]);
-sys_e
+%sys_e = arx(data, [2 2 3]);
+%sys_e
 
-sys_e = armax(data, [3 3 2 2]);
+%sys_e = armax(data, [3 3 2 2]);
 %sys_e
